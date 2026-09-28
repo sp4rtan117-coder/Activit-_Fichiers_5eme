@@ -514,7 +514,7 @@
             </div>
         </div>
 
-        <!-- MISSION 3 : MÉTADONNÉES AVEC TAILLE SYNCHRONISÉE DYNAMIQUE -->
+        <!-- MISSION 3 : MÉTADONNÉES (TAILLE FIXÉE À 1,8 GO) -->
         <div class="win11-app" id="win-m3">
             <div class="title-bar">
                 <span>🔍 Explorateur - Mission 3 : Enquête Métadonnées (8 points)</span>
@@ -552,7 +552,7 @@
                             </tr>
                             <tr oncontextmenu="openWindowsContextMenu(event, 'film', true)" ondblclick="openPropertiesModal('film')">
                                 <td>🎥 projet_film.mp4</td>
-                                <td id="m3-size-film" style="font-weight: 600;">--</td>
+                                <td id="m3-size-film" style="font-weight: 600;">1,8 Go</td>
                                 <td style="color: var(--win11-blue); font-weight: bold;">[Clic Droit ➔ Propriétés]</td>
                             </tr>
                         </tbody>
@@ -689,11 +689,11 @@
         let isPropContext = false;
         let softwareChoices = { s1: "", s2: "", s3: "", s4: "", s5: "", s6: "" };
 
-        // Structure dynamique des métadonnées générées aléatoirement
+        // Structure dynamique des métadonnées
         let m3GeneratedData = {
             author: { key: "", label: "" },
             device: { key: "", label: "" },
-            videoSize: { key: "", label: "" },
+            videoSize: { key: "1.8go", label: "1,8 Go" }, // Fixé à 1,8 Go pour la cohérence vidéo
             resolution: { key: "", label: "" },
             software: { key: "", label: "" }
         };
@@ -717,11 +717,6 @@
                 { key: "iphone", label: "iPhone 12" },
                 { key: "samsung", label: "Samsung Galaxy S20" }
             ];
-            const sizes = [
-                { key: "12ko", label: "12 Ko" },
-                { key: "1.8go", label: "1,8 Go" },
-                { key: "45mo", label: "45 Mo" }
-            ];
             const resolutions = [
                 { key: "3024", label: "3024 x 4032 px" },
                 { key: "1920", label: "1920 x 1080 px" },
@@ -735,11 +730,10 @@
 
             m3GeneratedData.author = authors[Math.floor(Math.random() * authors.length)];
             m3GeneratedData.device = devices[Math.floor(Math.random() * devices.length)];
-            m3GeneratedData.videoSize = sizes[Math.floor(Math.random() * sizes.length)];
+            m3GeneratedData.videoSize = { key: "1.8go", label: "1,8 Go" }; // Toujours 1,8 Go
             m3GeneratedData.resolution = resolutions[Math.floor(Math.random() * resolutions.length)];
             m3GeneratedData.software = softwares[Math.floor(Math.random() * softwares.length)];
 
-            // Synchronisation instantanée de la colonne "Taille" dans l'Explorateur
             const sizeFilmEl = document.getElementById('m3-size-film');
             if (sizeFilmEl) {
                 sizeFilmEl.innerText = m3GeneratedData.videoSize.label;
@@ -959,7 +953,7 @@
                 content.innerHTML = `
                     <p><strong>Nom :</strong> projet_film.mp4</p>
                     <p><strong>Type :</strong> Fichier Vidéo MPEG-4</p>
-                    <p><strong>Taille mémoire :</strong> ${m3GeneratedData.videoSize.label}</p>
+                    <p><strong>Taille mémoire :</strong> 1,8 Go (1 932 735 283 octets)</p>
                     <hr style="margin:8px 0; border:0; border-top:1px solid #e2e8f0;">
                     <p><strong>Durée :</strong> 00:12:45</p>
                 `;
@@ -981,7 +975,7 @@
             let correct = 0;
             if (q1 === m3GeneratedData.author.key) correct++;
             if (q2 === m3GeneratedData.device.key) correct++;
-            if (q3 === m3GeneratedData.videoSize.key) correct++;
+            if (q3 === m3GeneratedData.videoSize.key) correct++; // Toujours 1,8 Go ("1.8go")
             if (q4 === m3GeneratedData.resolution.key) correct++;
             if (q5 === m3GeneratedData.software.key) correct++;
 
